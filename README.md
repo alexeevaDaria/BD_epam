@@ -60,4 +60,54 @@
          Сommunicate through BusinessEntityID. Update SalesYTD, SalesLastYear, OrdersNum in dbo.Person table, if record exists in source
          and target. Add to dbo.Person if exists in source and doesnt in target, добавьте строку в dbo.Person.
          Delete from dbo.Person if the record exists only in target.
-         
+***
+*Lab4*
+a) Создайте таблицу Production.ProductCategoryHst, которая будет хранить информацию об изменениях в таблице Production.ProductCategory.
+
+Обязательные поля, которые должны присутствовать в таблице: ID — первичный ключ IDENTITY(1,1); Action — совершенное действие (insert, update или delete); ModifiedDate — дата и время, когда была совершена операция; SourceID — первичный ключ исходной таблицы; UserName — имя пользователя, совершившего операцию. Создайте другие поля, если считаете их нужными.
+
+b) Создайте один AFTER триггер для трех операций INSERT, UPDATE, DELETE для таблицы Production.ProductCategory. Триггер должен заполнять таблицу Production.ProductCategoryHst с указанием типа операции в поле Action в зависимости от оператора, вызвавшего триггер.
+
+c) Создайте представление VIEW, отображающее все поля таблицы Production.ProductCategory.
+
+d) Вставьте новую строку в Production.ProductCategory через представление. Обновите вставленную строку. Удалите вставленную строку. Убедитесь, что все три операции отображены в Production.ProductCategoryHst.
+***
+a) Создайте представление VIEW, отображающее данные из таблиц Production.ProductCategory и Production.ProductSubcategory. Сделайте невозможным просмотр исходного кода представления. Создайте уникальный кластерный индекс в представлении по полям ProductCategoryID, ProductSubcategoryID.
+
+b) Создайте три INSTEAD OF триггера для представления на операции INSERT, UPDATE, DELETE. Каждый триггер должен выполнять соответствующие операции в таблицах Production.ProductCategory и Production.ProductSubcategory.
+
+c) Вставьте новую строку в представление, указав новые данные для ProductCategory и ProductSubcategory. Триггер должен добавить новые строки в таблицы Production.ProductCategory и Production.ProductSubcategory. Обновите вставленные строки через представление. Удалите строки.
+***
+*Lab5*
+Создайте scalar-valued функцию, которая будет принимать в качестве входного параметра имя группы отделов (HumanResources.Department.GroupName) и возвращать количество отделов, входящих в эту группу.
+
+Создайте inline table-valued функцию, которая будет принимать в качестве входного параметра id отдела (HumanResources.Department.DepartmentID), а возвращать 3 самых старших сотрудника, которые начали работать в отделе с 2005 года.
+
+Вызовите функцию для каждого отдела, применив оператор CROSS APPLY. Вызовите функцию для каждого отдела, применив оператор OUTER APPLY.
+
+Измените созданную inline table-valued функцию, сделав ее multistatement table-valued (предварительно сохранив для проверки код создания inline table-valued функции).
+***
+*Lab6*
+Создайте хранимую процедуру, которая будет возвращать сводную таблицу (оператор PIVOT), отображающую данные о суммарном количестве проданных продуктов (Sales.SalesOrderDetail.OrderQty) за определенный год (Sales.SalesOrderHeader.OrderDate). Список лет передайте в процедуру через входной параметр.
+
+Таким образом, вызов процедуры будет выглядеть следующим образом:
+
+EXECUTE dbo.OrdersByYear ‘[2008], [2007], [2006]’
+***
+*Lab7*
+1) Вывести значения полей [BusinessEntityID], [NationalIDNumber] и [JobTitle] из таблицы [HumanResources].[Employee] в виде xml, сохраненного в переменную. Формат xml должен соответствовать примеру:
+
+<Employees>
+  <Employee ID="1">
+    <NationalIDNumber>295847284</NationalIDNumber>
+    <JobTitle>Chief Executive Officer</JobTitle>
+  </Employee>
+  <Employee ID="2">
+    <NationalIDNumber>245797967</NationalIDNumber>
+    <JobTitle>Vice President of Engineering</JobTitle>
+  </Employee>
+</Employees>
+
+Создать временную таблицу и заполнить её данными из переменной, содержащей xml.
+
+
